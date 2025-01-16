@@ -1,39 +1,38 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as authService from '../../services/authService';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 
-const SigninForm = (props) => {
+import { signIn } from '../../services/authService';
+
+import { UserContext } from '../../contexts/UserContext';
+
+const SignInForm = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState(['']);
+  const { setUser } = useContext(UserContext);
+  const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
 
-  const updateMessage = (msg) => {
-    setMessage(msg);
+  const handleChange = (evt) => {
+    setMessage('');
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
-  const handleChange = (e) => {
-    updateMessage('');
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
     try {
-      const user = await authService.signin(formData);
-      console.log(user);
-      props.setUser(user);
+      const signedInUser = await signIn(formData);
+      setUser(signedInUser);
       navigate('/');
     } catch (err) {
-      updateMessage(err.message);
+      setMessage(err.message);
     }
   };
 
   return (
     <main>
-      <h1>Log In</h1>
+      <h1>Sign In</h1>
       <p>{message}</p>
       <form autoComplete="off" onSubmit={handleSubmit}>
         <div>
@@ -45,6 +44,7 @@ const SigninForm = (props) => {
             value={formData.username}
             name="username"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -56,17 +56,16 @@ const SigninForm = (props) => {
             value={formData.password}
             name="password"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
-          <button>Log In</button>
-          <Link to="/">
-            <button>Cancel</button>
-          </Link>
+          <button>Sign In</button>
+          <button onClick={() => navigate("/")}>Cancel</button>
         </div>
       </form>
     </main>
   );
 };
 
-export default SigninForm;
+export default SignInForm;

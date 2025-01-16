@@ -1,36 +1,37 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as authService from '../../services/authService';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 
-const SignupForm = (props) => {
+import { signUp } from '../../services/authService';
+
+import { UserContext } from '../../contexts/UserContext';
+
+const SignUpForm = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState(['']);
+  const { setUser } = useContext(UserContext);
+  const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     password: '',
     passwordConf: '',
   });
 
-  const updateMessage = (msg) => {
-    setMessage(msg);
+  const { username, password, passwordConf } = formData;
+
+  const handleChange = (evt) => {
+    setMessage('');
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
     try {
-      const newUserResponse = await authService.signup(formData);
-      props.setUser(newUserResponse.user);
+      const newUser = await signUp(formData);
+      setUser(newUser);
       navigate('/');
     } catch (err) {
-      updateMessage(err.message);
+      setMessage(err.message);
     }
   };
-
-  const { username, password, passwordConf } = formData;
 
   const isFormInvalid = () => {
     return !(username && password && password === passwordConf);
@@ -49,6 +50,7 @@ const SignupForm = (props) => {
             value={username}
             name="username"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -59,6 +61,7 @@ const SignupForm = (props) => {
             value={password}
             name="password"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -69,17 +72,16 @@ const SignupForm = (props) => {
             value={passwordConf}
             name="passwordConf"
             onChange={handleChange}
+            required
           />
         </div>
         <div>
           <button disabled={isFormInvalid()}>Sign Up</button>
-          <Link to="/">
-            <button>Cancel</button>
-          </Link>
+          <button onClick={() => navigate("/")}>Cancel</button>
         </div>
       </form>
     </main>
   );
 };
 
-export default SignupForm;
+export default SignUpForm;

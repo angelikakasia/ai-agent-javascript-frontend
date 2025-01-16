@@ -1,54 +1,58 @@
-const BACKEND_URL = import.meta.env.VITE_EXPRESS_BACKEND_URL;
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/auth`;
 
-const getUser = () => {
-  const token = localStorage.getItem('token');
-  if (!token) return null;
-  const user = JSON.parse(atob(token.split('.')[1]));
-  return user;
-};
-
-const signup = async (formData) => {
+const signUp = async (formData) => {
   try {
-    const res = await fetch(`${BACKEND_URL}/users/signup`, {
+    const res = await fetch(`${BASE_URL}/sign-up`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
+
     const json = await res.json();
-    if (json.error) {
-      throw new Error(json.error);
+
+    if (json.err) {
+      throw new Error(json.err);
     }
-    localStorage.setItem('token', json.token);
-    return json;
+
+    if (json.token) {
+      localStorage.setItem('token', json.token);
+      return JSON.parse(atob(json.token.split('.')[1])).payload;
+    }
+
+    throw new Error('Invalid response from server');
   } catch (err) {
+    console.log(err);
     throw new Error(err);
   }
 };
 
-const signin = async (user) => {
+const signIn = async (formData) => {
   try {
-    const res = await fetch(`${BACKEND_URL}/users/signin`, {
+    const res = await fetch(`${BASE_URL}/sign-in`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
+      body: JSON.stringify(formData),
     });
+
     const json = await res.json();
-    if (json.error) {
-      throw new Error(json.error);
+
+    if (json.err) {
+      throw new Error(json.err);
     }
+
     if (json.token) {
       localStorage.setItem('token', json.token);
-      const user = JSON.parse(atob(json.token.split('.')[1]));
-      return user;
+      return JSON.parse(atob(json.token.split('.')[1])).payload;
     }
+
+    throw new Error('Invalid response from server');
   } catch (err) {
     console.log(err);
-    throw err;
+    throw new Error(err);
   }
 };
 
-const signout = () => {
-  localStorage.removeItem('token');
+export { 
+  signUp,
+  signIn
 };
-
-export { signup, signin, getUser, signout };
