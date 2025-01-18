@@ -8,15 +8,15 @@ const signUp = async (formData) => {
       body: JSON.stringify(formData),
     });
 
-    const json = await res.json();
+    const data = await res.json();
 
-    if (json.err) {
-      throw new Error(json.err);
+    if (data.err) {
+      throw new Error(data.err);
     }
 
-    if (json.token) {
-      localStorage.setItem('token', json.token);
-      return JSON.parse(atob(json.token.split('.')[1])).payload;
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      return JSON.parse(atob(data.token.split('.')[1])).payload;
     }
 
     throw new Error('Invalid response from server');
@@ -34,15 +34,15 @@ const signIn = async (formData) => {
       body: JSON.stringify(formData),
     });
 
-    const json = await res.json();
+    const data = await res.json();
 
-    if (json.err) {
-      throw new Error(json.err);
+    if (data.err) {
+      throw new Error(data.err);
     }
 
-    if (json.token) {
-      localStorage.setItem('token', json.token);
-      return JSON.parse(atob(json.token.split('.')[1])).payload;
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      return JSON.parse(atob(data.token.split('.')[1])).payload;
     }
 
     throw new Error('Invalid response from server');
@@ -52,7 +52,7 @@ const signIn = async (formData) => {
   }
 };
 
-export { 
+export {
   signUp,
-  signIn
+  signIn,
 };
