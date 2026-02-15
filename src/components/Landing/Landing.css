@@ -1,13 +1,16 @@
-/* FULL PAGE RED */
+/* ========================= */
+/* LANDING PAGE */
+/* ========================= */
+
 .landing {
-  background: #8b0000;
-  color: #ffffff;
-  min-height: 100vh;
+  width: 100%;
 }
 
 /* HERO */
+
 .hero {
-  padding: 160px 8%;
+  background: #9d0000;
+  padding: 140px 10%;
 }
 
 .hero-content {
@@ -15,7 +18,7 @@
 }
 
 .hero h1 {
-  font-size: 72px;
+  font-size: 68px;
   line-height: 1.05;
   margin-bottom: 30px;
 }
@@ -27,11 +30,12 @@
   max-width: 600px;
 }
 
-/* BUTTONS */
 .hero-buttons {
   display: flex;
   gap: 20px;
 }
+
+/* BUTTONS */
 
 .btn-primary {
   background: #c6ff00;
@@ -40,7 +44,6 @@
   border-radius: 10px;
   font-weight: 700;
   text-decoration: none;
-  display: inline-block;
 }
 
 .btn-secondary {
@@ -49,13 +52,17 @@
   border-radius: 10px;
   color: #ffffff;
   text-decoration: none;
-  display: inline-block;
 }
 
-/* SECTIONS — NOW RED TOO */
+/* SECTIONS */
+
 .section {
-  padding: 120px 8%;
-  background: #8b0000;
+  padding: 120px 10%;
+  background: #9d0000; /* KEEP RED */
+}
+
+.section.light {
+  background: #9d0000; /* REMOVE GREY */
 }
 
 .section h2 {
