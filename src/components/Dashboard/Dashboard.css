@@ -1,8 +1,27 @@
 .dashboard {
-  color: #111;
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
 }
 
-.dashboard h1 {
-  font-size: 42px;
-  margin-bottom: 20px;
+.dashboard-container {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 50px;
+  width: 700px;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}
+
+.dashboard-container h1 {
+  margin-bottom: 30px;
+}
+
+.agent-button {
+  background: #f3d45a;
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
 }
