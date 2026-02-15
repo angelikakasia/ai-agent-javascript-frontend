@@ -1,16 +1,22 @@
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const apiRequest = async (endpoint, method = "GET", body = null) => {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   const res = await fetch(`${API_URL}${endpoint}`, {
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: token ? `Bearer ${token}` : ""
+      ...(token && { Authorization: `Bearer ${token}` })
     },
     body: body ? JSON.stringify(body) : null
-  })
+  });
 
-  return res.json()
-}
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    throw new Error(data?.err || "Request failed");
+  }
+
+  return data;
+};
