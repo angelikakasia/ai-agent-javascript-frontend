@@ -5,13 +5,17 @@ import "./Auth.css";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: ""
   });
 
+  const [error, setError] = useState("");
+
   const handleChange = (e) => {
+    setError("");
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -22,26 +26,30 @@ const SignUpForm = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      setError("Passwords do not match");
       return;
     }
 
     try {
-      await signUp(formData);
+      await signUp({
+        email: formData.email,
+        password: formData.password
+      });
+
       navigate("/");
     } catch (err) {
-      alert("Sign up failed");
+      setError(err.message);
     }
   };
 
   return (
     <div className="auth-page">
       <div className="auth-card">
-
         <h1>Create Account</h1>
 
-        <form onSubmit={handleSubmit}>
+        {error && <p className="auth-error">{error}</p>}
 
+        <form onSubmit={handleSubmit}>
           <label>Email</label>
           <input
             type="email"
@@ -72,7 +80,6 @@ const SignUpForm = () => {
           <button type="submit" className="auth-btn">
             Sign Up
           </button>
-
         </form>
       </div>
     </div>

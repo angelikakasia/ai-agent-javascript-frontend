@@ -1,7 +1,21 @@
+
+/* GLOBAL RESET */
+
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
+  background: #9d0000; /* full red background */
+  color: white;
 }
+
+
+/* APP LAYOUT */
+
 
 .app {
   min-height: 100vh;
@@ -12,4 +26,54 @@ body {
 .page {
   flex: 1;
   width: 100%;
+}
+
+
+/* AUTH PAGES */
+
+
+.auth-page {
+  min-height: 100vh;
+  background: #9d0000; /* match site */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  background: white;
+  color: #111;
+  padding: 50px;
+  border-radius: 14px;
+  width: 420px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.auth-card h1 {
+  margin-bottom: 30px;
+}
+
+.auth-card label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  background: #c6ff00;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
 }
