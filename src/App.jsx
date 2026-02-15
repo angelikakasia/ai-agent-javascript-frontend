@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 
 import NavBar from "./components/NavBar/NavBar";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
@@ -8,13 +8,15 @@ import Landing from "./components/Landing/Landing";
 import Dashboard from "./components/Dashboard/Dashboard";
 import AgentDetail from "./components/Agent/AgentDetail";
 
+import Platform from "./components/Marketing/Platform";
+import CustomerStories from "./components/Marketing/CustomerStories";
+import Solutions from "./components/Marketing/Solutions";
+import Company from "./components/Marketing/Company";
+
 import { UserContext } from "./contexts/UserContext";
-import Platform from "./components/Marketing/Platform.jsx";
-import CustomerStories from "./components/Marketing/CustomerStories.jsx";
-import Solutions from "./components/Marketing/Solutions.jsx";
-import Company from "./components/Marketing/Company.jsx";
 
 import "./App.css";
+
 const App = () => {
   const { user } = useContext(UserContext);
 
