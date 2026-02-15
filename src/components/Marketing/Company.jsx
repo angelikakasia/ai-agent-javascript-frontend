@@ -11,7 +11,7 @@ const Company = () => {
       </section>
 
       <section className="company-section">
-        <h2>Founder</h2>
+        
         <p>
           Suzana was created by Angelika,
           a cybersecurity student and engineer passionate about
