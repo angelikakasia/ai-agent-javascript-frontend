@@ -1,82 +1,74 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router";
-
+import { useNavigate } from "react-router-dom";
 import { signIn } from "../../services/authService";
 import { UserContext } from "../../contexts/UserContext";
+import "./Auth.css";
 
 const SignInForm = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
-  const [message, setMessage] = useState("");
-
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
-  const { email, password } = formData;
+  const [error, setError] = useState("");
 
-  const handleChange = (evt) => {
-    setMessage("");
+  const handleChange = (e) => {
+    setError("");
     setFormData({
       ...formData,
-      [evt.target.name]: evt.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-      const signedInUser = await signIn({ email, password });
-      setUser(signedInUser);
+      const user = await signIn(formData);
+      setUser(user);
       navigate("/");
-    } catch (err) {
-      setMessage(err.message);
+    } catch {
+      setError("Invalid email or password");
     }
   };
 
   return (
-    <main>
-      <h1>Sign In</h1>
-      <p>{message}</p>
+    <div className="auth-page">
+      <div className="auth-card">
+        <h1>Sign In</h1>
 
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        {error && <p className="auth-error">{error}</p>}
+
+        <form onSubmit={handleSubmit} autoComplete="off">
+
+          <label>Email</label>
           <input
-            type="text"
-            autoComplete="off"
-            id="email"
+            type="email"
             name="email"
-            value={email}
+            value={formData.email}
             onChange={handleChange}
             required
           />
-        </div>
 
-        <div>
-          <label htmlFor="password">Password:</label>
+          <label>Password</label>
           <input
             type="password"
-            autoComplete="off"
-            id="password"
             name="password"
-            value={password}
+            value={formData.password}
             onChange={handleChange}
             required
           />
-        </div>
 
-        <div>
-          <button type="submit">Sign In</button>
-          <button type="button" onClick={() => navigate("/")}>
-            Cancel
+          <button type="submit" className="auth-btn">
+            Sign In
           </button>
-        </div>
-      </form>
-    </main>
+
+        </form>
+      </div>
+    </div>
   );
 };
 
