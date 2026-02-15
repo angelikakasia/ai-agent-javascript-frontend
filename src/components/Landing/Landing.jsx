@@ -3,54 +3,71 @@ import "./Landing.css";
 
 const Landing = () => {
   return (
-    <main className="marketing-page">
-      
-      <section className="marketing-hero">
-        <div className="hero-left">
-          <h1>
-            Create your own secure agent.
-            <br />
-            Understand its authority before execution.
-          </h1>
+    <main className="landing">
+
+      {/* HERO */}
+      <section className="hero">
+        <div className="container hero-grid">
+
+          <div className="hero-text">
+            <h1>
+              Create your own secure agent.
+              <br />
+              Understand its authority before execution.
+            </h1>
+
+            <p>
+              Suzana is a design-time authority modeling platform.
+              Create AI agents, assign actions, and visualize their
+              full impact before deployment.
+            </p>
+
+            <div className="hero-buttons">
+              <Link to="/sign-up" className="btn-primary">
+                Get Started
+              </Link>
+              <Link to="/sign-in" className="btn-secondary">
+                Sign In
+              </Link>
+            </div>
+          </div>
+
+          <div className="hero-image">
+            <img src="/suzana.png" alt="Suzana preview" />
+          </div>
+
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="section">
+        <div className="container">
+
+          <h2>What This App Does</h2>
+
+          <ul className="feature-list">
+            <li>Create AI agents</li>
+            <li>Assign predefined actions</li>
+            <li>Automatically calculate impact levels</li>
+            <li>Preview authority before execution</li>
+          </ul>
+
+        </div>
+      </section>
+
+      {/* SECURITY SECTION */}
+      <section className="section light">
+        <div className="container">
+
+          <h2>Built For Design-Time Security</h2>
 
           <p>
-            Suzana – Agent Authority Manager – allows developers to
-            create AI agents, assign actions, and automatically see
-            the impact of those permissions before deployment.
+            Suzana models authority before runtime. Agents operate only
+            through explicitly assigned permissions. Impact is grouped
+            by severity: Low, Medium, High, and Irreversible.
           </p>
 
-          <div className="hero-buttons">
-            <Link to="/sign-up" className="btn-primary">
-              Get Started
-            </Link>
-            <Link to="/sign-in" className="btn-secondary">
-              Sign In
-            </Link>
-          </div>
         </div>
-
-        <div className="hero-right">
-          <img src="/suzana.png" alt="Suzana preview" />
-        </div>
-      </section>
-
-      <section className="preview-section">
-        <h2>What This App Does</h2>
-        <ul>
-          <li>Create AI agents</li>
-          <li>Assign predefined actions</li>
-          <li>Automatically calculate impact level</li>
-          <li>View authority summary before execution</li>
-        </ul>
-      </section>
-
-      <section className="preview-section">
-        <h2>Built For Design-Time Security</h2>
-        <p>
-          This project demonstrates a permission-based authority model
-          where agents only act through explicitly assigned actions.
-          Impact is grouped by severity: Low, Medium, High, and Irreversible.
-        </p>
       </section>
 
     </main>
