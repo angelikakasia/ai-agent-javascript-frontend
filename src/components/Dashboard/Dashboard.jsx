@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { getAgents } from "../../services/agentService";
-
+import "./Dashboard.css"
 const Dashboard = () => {
   const { user } = useContext(UserContext);
   const [agents, setAgents] = useState([]);
