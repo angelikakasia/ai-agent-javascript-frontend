@@ -1,0 +1,29 @@
+.navbar {
+  background-color: #a40000;
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #ffffff;
+  margin-left: 28px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  opacity: 0.8;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.welcome {
+  margin-right: 20px;
+}

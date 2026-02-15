@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
-
 import { UserContext } from "../../contexts/UserContext";
 import { getAgents } from "../../services/agentService";
 
@@ -13,20 +12,10 @@ const Dashboard = () => {
     const fetchAgents = async () => {
       try {
         const data = await getAgents();
-
-        console.log("AGENTS RESPONSE:", data); // 👈 LOG HERE
-
-        // handle both possible backend shapes
-        if (Array.isArray(data)) {
-          setAgents(data);
-        } else if (data.agents) {
-          setAgents(data.agents);
-        } else {
-          setAgents([]);
-        }
-
+        console.log("Agents response:", data);
+        setAgents(data || []);
       } catch (err) {
-        console.log(err);
+        console.log("FETCH AGENTS ERROR:", err);
       }
     };
 
@@ -34,22 +23,30 @@ const Dashboard = () => {
   }, [user]);
 
   return (
-    <main>
-      <h1>Welcome, {user?.email}</h1>
+    <main className="dashboard">
+      <div className="dashboard-container">
+        <h1>Dashboard</h1>
+        <p className="subtitle">Signed in as {user?.email}</p>
 
-      <h2>Your Agents</h2>
+        <h2>Your Agents</h2>
 
-      {agents.length === 0 && <p>No agents yet.</p>}
-
-      <ul>
-        {agents.map(agent => (
-          <li key={agent.id}>
-            <button onClick={() => navigate(`/agents/${agent.id}`)}>
-              {agent.name}
-            </button>
-          </li>
-        ))}
-      </ul>
+        {agents.length === 0 ? (
+          <p className="empty">No agents created yet.</p>
+        ) : (
+          <ul className="agent-list">
+            {agents.map((agent) => (
+              <li key={agent.id}>
+                <button
+                  className="agent-button"
+                  onClick={() => navigate(`/agents/${agent.id}`)}
+                >
+                  {agent.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </main>
   );
 };
