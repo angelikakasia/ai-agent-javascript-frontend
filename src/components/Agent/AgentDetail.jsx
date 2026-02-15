@@ -1,106 +1,154 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ImpactSummary from "./ImpactSummary";
-
 import {
   getAgent,
-  getActions,
+  updateAgent,
   assignAction,
-  removeAction
+  removeAction,
+  getActions
 } from "../../services/agentService";
 
 const AgentDetail = () => {
   const { id } = useParams();
 
-  const [agent, setAgent] = useState(null);
-  const [actions, setActions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [agentData, setAgentData] = useState(null);
+  const [allActions, setAllActions] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-  /* ------------------ Load Data ------------------ */
+  const loadData = async () => {
+    try {
+      const agent = await getAgent(id);
+      const actions = await getActions();
 
-  const loadAgent = async () => {
-    const data = await getAgent(id);
-    setAgent(data);
-  };
-
-  const loadActions = async () => {
-    const data = await getActions();
-    setActions(data);
+      setAgentData(agent);
+      setAllActions(actions);
+      setName(agent.agent.name);
+      setDescription(agent.agent.description);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        setLoading(true);
-        await loadAgent();
-        await loadActions();
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    init();
+    loadData();
   }, [id]);
 
-  /* ------------------ Assign / Remove ------------------ */
-
-  const handleAssign = async (actionId) => {
-    await assignAction(id, actionId);
-    await loadAgent();
+  const handleUpdate = async () => {
+    await updateAgent(id, { name, description });
+    setEditMode(false);
+    loadData();
   };
 
-  const handleRemove = async (actionId) => {
-    await removeAction(id, actionId);
-    await loadAgent();
-  };
+  if (!agentData) {
+    return (
+      <div className="page">
+        <div className="agent-detail-container">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
-  /* ------------------ UI States ------------------ */
+return (
+  <div className="dashboard-page">
+    <div className="dashboard-container">
 
-  if (loading) return <p>Loading...</p>;
-  if (!agent) return <p>Agent not found.</p>;
+      <div className="agent-card">
+        {editMode ? (
+          <>
+            <input
+              className="agent-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              className="agent-input"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <button className="primary-btn" onClick={handleUpdate}>
+              Save
+            </button>
+          </>
+        ) : (
+          <>
+            <h1>{agentData.agent.name}</h1>
+            <p className="muted">{agentData.agent.description}</p>
+            <button
+              className="primary-btn"
+              onClick={() => setEditMode(true)}
+            >
+              Edit
+            </button>
+          </>
+        )}
+      </div>
 
-  const assignedIds = agent.actions.map((a) => a.id);
-
-  return (
-    <main className="dashboard">
-      <div className="dashboard-container">
-
-        <h1>{agent.agent.name}</h1>
-        <p>{agent.agent.description}</p>
-
-        <ImpactSummary impactSummary={agent.impact_summary} />
-
-        <h2>Assigned Actions</h2>
-        <ul>
-          {agent.actions.map((action) => (
-            <li key={action.id}>
-              {action.name} ({action.impact_level})
-              <button onClick={() => handleRemove(action.id)}>
-                Remove
-              </button>
-            </li>
-          ))}
+      <div className="agent-card">
+        <h2>Impact Summary</h2>
+        <ul className="impact-list">
+          <li>Low: {agentData.impact_summary.low}</li>
+          <li>Medium: {agentData.impact_summary.medium}</li>
+          <li>High: {agentData.impact_summary.high}</li>
+          <li>Irreversible: {agentData.impact_summary.irreversible}</li>
         </ul>
+      </div>
 
+      <div className="agent-card">
+        <h2>Assigned Actions</h2>
+
+        {agentData.actions.length === 0 ? (
+          <p className="muted">No actions assigned.</p>
+        ) : (
+          <ul className="agent-list">
+            {agentData.actions.map((action) => (
+              <li key={action.id}>
+                {action.name}
+                <button
+                  className="delete-btn"
+                  onClick={() =>
+                    removeAction(id, action.id).then(loadData)
+                  }
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="agent-card">
         <h2>Available Actions</h2>
-        <ul>
-          {actions
-            .filter((a) => !assignedIds.includes(a.id))
+
+        <ul className="agent-list">
+          {allActions
+            .filter(
+              (a) =>
+                !agentData.actions.some((x) => x.id === a.id)
+            )
             .map((action) => (
               <li key={action.id}>
-                {action.name} ({action.impact_level})
-                <button onClick={() => handleAssign(action.id)}>
+                {action.name}
+                <button
+                  className="primary-btn"
+                  onClick={() =>
+                    assignAction(id, action.id).then(loadData)
+                  }
+                >
                   Assign
                 </button>
               </li>
             ))}
         </ul>
-
       </div>
-    </main>
-  );
+
+    </div>
+  </div>
+);
+
 };
 
 export default AgentDetail;

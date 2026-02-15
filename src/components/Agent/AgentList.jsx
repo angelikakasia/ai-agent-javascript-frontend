@@ -9,7 +9,7 @@ const AgentList = () => {
   const loadAgents = async () => {
     try {
       const data = await getAgents();
-      setAgents(data);
+      setAgents(data || []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -30,75 +30,54 @@ const AgentList = () => {
     }
   };
 
-  if (loading) return <p>Loading agents...</p>;
-
   return (
-    <main className="dashboard">
+    <div className="dashboard-page">
       <div className="dashboard-container">
 
-        <h1>Your Agents</h1>
+        <div className="dashboard-card">
+          <h1>Your Agents</h1>
 
-        <Link
-          to="/agents/new"
-          style={{
-            display: "inline-block",
-            marginBottom: "20px",
-            background: "#f3d45a",
-            color: "#000",
-            padding: "10px 20px",
-            borderRadius: "8px",
-            textDecoration: "none"
-          }}
-        >
-          + Create Agent
-        </Link>
+          <Link to="/agents/new" className="primary-btn create-btn">
+            + Create Agent
+          </Link>
+        </div>
 
-        {agents.length === 0 ? (
-          <p>No agents created yet.</p>
-        ) : (
-          <ul style={{ listStyle: "none", padding: 0 }}>
-            {agents.map((agent) => (
-              <li
-                key={agent.id}
-                style={{
-                  background: "rgba(255,255,255,0.08)",
-                  padding: "20px",
-                  marginBottom: "15px",
-                  borderRadius: "12px"
-                }}
-              >
-                <h3>{agent.name}</h3>
-                <p>{agent.description}</p>
+        <div className="dashboard-card">
 
-                <div style={{ marginTop: "10px" }}>
-                  <Link
-                    to={`/agents/${agent.id}`}
-                    style={{ marginRight: "15px" }}
-                  >
-                    View
-                  </Link>
+          {loading ? (
+            <p className="muted">Loading agents...</p>
+          ) : agents.length === 0 ? (
+            <p className="muted">No agents created yet.</p>
+          ) : (
+            <ul className="agent-list">
+              {agents.map((agent) => {
+                const id = agent._id || agent.id;
 
-                  <button
-                    onClick={() => handleDelete(agent.id)}
-                    style={{
-                      background: "#990000",
-                      color: "white",
-                      border: "none",
-                      padding: "8px 16px",
-                      borderRadius: "6px",
-                      cursor: "pointer"
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+                return (
+                  <li key={id}>
+                    <div>
+                      <Link to={`/agents/${id}`} className="agent-name">
+                        {agent.name}
+                      </Link>
+                      <p className="agent-desc">{agent.description}</p>
+                    </div>
+
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(id)}
+                    >
+                      Delete
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+
+        </div>
 
       </div>
-    </main>
+    </div>
   );
 };
 

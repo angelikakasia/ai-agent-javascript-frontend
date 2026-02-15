@@ -24,10 +24,15 @@ const AgentForm = () => {
     e.preventDefault();
     setError("");
 
+    if (!formData.name.trim() || !formData.description.trim()) {
+      setError("All fields are required.");
+      return;
+    }
+
     try {
       setLoading(true);
       await createAgent(formData);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       console.error(err);
       setError("Failed to create agent.");
@@ -37,57 +42,48 @@ const AgentForm = () => {
   };
 
   return (
-    <main className="dashboard">
+    <div className="dashboard-page">
       <div className="dashboard-container">
 
-        <h1>Create Agent</h1>
+        <div className="dashboard-card">
+          <h1>Create Agent</h1>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p className="error-text">{error}</p>}
 
-        <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="agent-form-vertical">
 
-          <div style={{ marginBottom: "20px" }}>
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              style={{ width: "100%", padding: "10px", marginTop: "8px" }}
-            />
-          </div>
+            <div className="form-group">
+              <label>Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
 
-          <div style={{ marginBottom: "20px" }}>
-            <label>Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              required
-              style={{ width: "100%", padding: "10px", marginTop: "8px" }}
-            />
-          </div>
+            <div className="form-group">
+              <label>Description</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              background: "#f3d45a",
-              color: "#000",
-              padding: "12px 24px",
-              borderRadius: "8px",
-              border: "none",
-              cursor: "pointer"
-            }}
-          >
-            {loading ? "Creating..." : "Create"}
-          </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="primary-btn"
+            >
+              {loading ? "Creating..." : "Create Agent"}
+            </button>
 
-        </form>
+          </form>
+        </div>
 
       </div>
-    </main>
+    </div>
   );
 };
 

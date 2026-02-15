@@ -1,83 +1,99 @@
-/* NAVBAR CONTAINER */
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+
 .navbar {
+  width: 100%;
   background: #ffffff;
-  padding: 20px 8%;
+  padding: 18px 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
-  box-sizing: border-box;
 }
 
 /* LEFT SIDE */
-.nav-left {
+
+.navbar-left {
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 60px;
 }
 
-/* LOGO */
 .logo {
   font-weight: 700;
   letter-spacing: 2px;
   font-size: 18px;
-  color: #111;
   text-decoration: none;
+  color: #111;
 }
 
 /* CENTER LINKS */
+
 .nav-links {
   display: flex;
-  gap: 35px;
+  gap: 32px;
 }
 
 .nav-links a {
   text-decoration: none;
   color: #111;
   font-weight: 500;
-  transition: 0.2s ease;
+  font-size: 15px;
+  transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-  opacity: 0.6;
+  color: #9d0000;
 }
 
 /* RIGHT SIDE */
-.nav-right {
+
+.navbar-right {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 24px;
 }
 
-.nav-right a {
+.nav-link {
   text-decoration: none;
   color: #111;
-  font-weight: 500;
+  font-size: 15px;
 }
 
-/* SIGN UP BUTTON */
+.dashboard-link {
+  text-decoration: none;
+  color: #9d0000;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.user-email {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Buttons */
+
 .signup-btn {
   background: #c6ff00;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 6px;
-  color: black !important;
+  text-decoration: none;
+  color: #000;
   font-weight: 600;
+  transition: 0.2s ease;
 }
 
-/* SIGN OUT BUTTON */
+.signup-btn:hover {
+  transform: translateY(-1px);
+}
+
 .signout-btn {
   background: transparent;
-  border: 1px solid #111;
+  border: 1px solid #ddd;
   padding: 6px 14px;
   border-radius: 6px;
   cursor: pointer;
-}
-.navbar a {
-  color: black;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.navbar a:hover {
-  opacity: 0.7;
+  font-size: 14px;
 }

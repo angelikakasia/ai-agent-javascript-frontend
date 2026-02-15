@@ -1,17 +1,30 @@
-const ActionSelector = ({ actions = [], selectedActions = [], onToggle }) => {
+const ActionSelector = ({
+  actions = [],
+  selectedActions = [],
+  onToggle
+}) => {
   return (
-    <div>
-      <h3>Allowed Actions</h3>
-      {actions.map((action) => (
-        <label key={action} style={{ display: "block", marginBottom: "8px" }}>
-          <input
-            type="checkbox"
-            checked={selectedActions.includes(action)}
-            onChange={() => onToggle(action)}
-          />
-          {action}
-        </label>
-      ))}
+    <div className="agent-card">
+      <h2>Allowed Actions</h2>
+
+      {actions.length === 0 ? (
+        <p className="muted">No actions available.</p>
+      ) : (
+        <ul className="action-list">
+          {actions.map((action) => (
+            <li key={action} className="action-item">
+              <label className="action-label">
+                <input
+                  type="checkbox"
+                  checked={selectedActions.includes(action)}
+                  onChange={() => onToggle(action)}
+                />
+                <span>{action}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

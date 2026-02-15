@@ -1,27 +1,146 @@
-.dashboard {
+/* ============================= */
+/* SUZANA TYPOGRAPHY MATCH */
+/* ============================= */
+
+.dashboard-page {
+  background: #7a0000;
+  min-height: calc(100vh - 70px);
+  padding: 140px 60px;
   display: flex;
   justify-content: center;
-  padding: 80px 0;
 }
 
 .dashboard-container {
-  background: rgba(255, 255, 255, 0.08);
-  padding: 50px;
-  width: 700px;
-  border-radius: 16px;
-  backdrop-filter: blur(6px);
+  width: 100%;
+  max-width: 1000px;
 }
 
-.dashboard-container h1 {
-  margin-bottom: 30px;
+/* HEADER */
+
+.dashboard-header {
+  margin-bottom: 100px;
+  color: #f3e6c5;
 }
 
-.agent-button {
-  background: #f3d45a;
-  color: #000;
+.dashboard-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 64px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.dashboard-header p {
+  font-size: 20px;
+  max-width: 650px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* CARDS */
+
+.dashboard-card {
+  background: #8c0000;
+  padding: 60px;
+  border-radius: 12px;
+  margin-bottom: 80px;
+  color: #f3e6c5;
+}
+
+.dashboard-card h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+/* FORM */
+
+.agent-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.agent-form input,
+.agent-form textarea {
+  background: #7a0000;
+  border: 1px solid rgba(243, 230, 197, 0.4);
+  padding: 18px;
+  border-radius: 6px;
+  color: #f3e6c5;
+  font-size: 18px;
+}
+
+.agent-form textarea {
+  min-height: 120px;
+}
+
+.agent-form input::placeholder,
+.agent-form textarea::placeholder {
+  color: rgba(243, 230, 197, 0.6);
+}
+
+.agent-form button {
+  width: fit-content;
+  padding: 16px 32px;
+  border-radius: 4px;
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
+  background: #f3e6c5;
+  color: #7a0000;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
+}
+
+.agent-form button:hover {
+  opacity: 0.85;
+}
+
+/* AGENTS */
+
+.agent-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.agent-tile {
+  border-bottom: 1px solid rgba(243, 230, 197, 0.4);
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.agent-name {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  color: #f3e6c5;
+  text-decoration: none;
+}
+
+.agent-name:hover {
+  text-decoration: underline;
+}
+
+.agent-desc {
   margin-top: 10px;
+  font-size: 17px;
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 650px;
+}
+
+.delete-btn {
+  background: transparent;
+  border: 1px solid rgba(243, 230, 197, 0.5);
+  color: #f3e6c5;
+  padding: 8px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: rgba(243, 230, 197, 0.1);
 }

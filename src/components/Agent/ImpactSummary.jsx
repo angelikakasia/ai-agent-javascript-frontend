@@ -2,38 +2,24 @@ const ImpactSummary = ({ impactSummary }) => {
   if (!impactSummary) return null;
 
   return (
-    <div
-      style={{
-        marginTop: "30px",
-        background: "rgba(255,255,255,0.08)",
-        padding: "25px",
-        borderRadius: "12px"
-      }}
-    >
+    <div className="agent-card">
       <h2>Impact Summary</h2>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", marginTop: "15px" }}>
-        <ImpactCard label="Low" value={impactSummary.low} color="#4caf50" />
-        <ImpactCard label="Medium" value={impactSummary.medium} color="#ff9800" />
-        <ImpactCard label="High" value={impactSummary.high} color="#f44336" />
-        <ImpactCard label="Irreversible" value={impactSummary.irreversible} color="#b71c1c" />
+      <div className="impact-grid">
+        <ImpactCard label="Low" value={impactSummary.low} variant="low" />
+        <ImpactCard label="Medium" value={impactSummary.medium} variant="medium" />
+        <ImpactCard label="High" value={impactSummary.high} variant="high" />
+        <ImpactCard label="Irreversible" value={impactSummary.irreversible} variant="critical" />
       </div>
     </div>
   );
 };
 
-const ImpactCard = ({ label, value, color }) => {
+const ImpactCard = ({ label, value, variant }) => {
   return (
-    <div
-      style={{
-        background: "rgba(0,0,0,0.3)",
-        padding: "15px",
-        borderRadius: "8px",
-        borderLeft: `5px solid ${color}`
-      }}
-    >
-      <strong>{label}</strong>
-      <p style={{ margin: "8px 0 0 0", fontSize: "20px" }}>{value}</p>
+    <div className={`impact-card ${variant}`}>
+      <span className="impact-label">{label}</span>
+      <span className="impact-value">{value}</span>
     </div>
   );
 };
