@@ -72,3 +72,12 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.navbar a {
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  opacity: 0.7;
+}
