@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import "./NavBar.css";
 
@@ -15,27 +15,27 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-left">
+      {/* LEFT SIDE */}
+      <div className="nav-left">
         <Link to="/" className="logo">
           SUZANA
         </Link>
-      </div>
 
-      <div className="navbar-center">
         {!user && (
-          <>
+          <div className="nav-links">
             <Link to="/platform">Platform</Link>
             <Link to="/customer-stories">Customer Stories</Link>
             <Link to="/solutions">Solutions</Link>
             <Link to="/company">Company</Link>
-          </>
+          </div>
         )}
       </div>
 
-      <div className="navbar-right">
+      {/* RIGHT SIDE */}
+      <div className="nav-right">
         {user ? (
           <>
-            <span className="welcome">Welcome, {user.email}</span>
+            <span className="welcome">{user.email}</span>
             <Link to="/">Dashboard</Link>
             <button className="signout-btn" onClick={handleSignOut}>
               Sign Out
