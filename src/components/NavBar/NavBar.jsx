@@ -24,7 +24,7 @@ const NavBar = () => {
 
         <nav className="nav-links">
           <Link to="/platform">Platform</Link>
-          <Link to="/customer-stories">Customer Stories</Link>
+          <Link to="/customer-stories">Use Cases</Link>
           <Link to="/solutions">Solutions</Link>
           <Link to="/company">Company</Link>
         </nav>
