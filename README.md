@@ -1,4 +1,5 @@
 <img width="715" height="280" alt="Image" src="https://github.com/user-attachments/assets/188944a1-3ac7-4c14-9f11-fcf13225e23e" />
+<img width="709" height="422" alt="Image" src="https://github.com/user-attachments/assets/dc5ec0aa-6e08-4fe7-9da4-ba15256a3a6d" />
 
 # Agentic AI  (Frontend)
 
@@ -66,9 +67,7 @@ npm run dev
 
 The app runs at:
 
-VITE_API_URL=http://localhost:5000
-
-
+http://localhost:5173/
 ---
 
 ## Features
