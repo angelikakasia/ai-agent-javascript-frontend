@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   getAgent,
   updateAgent,
   assignAction,
   removeAction,
   getActions,
+  deleteAgent
 } from "../../services/agentService";
 
 const AgentDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [agentData, setAgentData] = useState(null);
   const [allActions, setAllActions] = useState([]);
@@ -41,21 +43,30 @@ const AgentDetail = () => {
     loadData();
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteAgent(id);
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (!agentData) {
     return (
-      <div className="page">
-        <div className="agent-detail-container">
+      <div className="dashboard-page">
+        <div className="dashboard-container">
           <p>Loading...</p>
         </div>
       </div>
     );
   }
-  console.log("All actions:", allActions);
-  console.log("Assigned actions:", agentData.actions);
 
   return (
     <div className="dashboard-page">
       <div className="dashboard-container">
+
+        {/* AGENT HEADER */}
         <div className="agent-card">
           {editMode ? (
             <>
@@ -77,13 +88,27 @@ const AgentDetail = () => {
             <>
               <h1>{agentData.agent.name}</h1>
               <p className="muted">{agentData.agent.description}</p>
-              <button className="primary-btn" onClick={() => setEditMode(true)}>
-                Edit
-              </button>
+
+              <div style={{ display: "flex", gap: "10px" }}>
+                <button
+                  className="primary-btn"
+                  onClick={() => setEditMode(true)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  className="delete-btn"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </button>
+              </div>
             </>
           )}
         </div>
 
+        {/* IMPACT */}
         <div className="agent-card">
           <h2>Impact Summary</h2>
           <ul className="impact-list">
@@ -97,6 +122,7 @@ const AgentDetail = () => {
           <p className="risk-score">{agentData.risk_score}</p>
         </div>
 
+        {/* ASSIGNED ACTIONS */}
         <div className="agent-card">
           <h2>Assigned Actions</h2>
 
@@ -109,7 +135,9 @@ const AgentDetail = () => {
                   {action.name}
                   <button
                     className="delete-btn"
-                    onClick={() => removeAction(id, action.id).then(loadData)}
+                    onClick={() =>
+                      removeAction(id, action.id).then(loadData)
+                    }
                   >
                     Remove
                   </button>
@@ -119,18 +147,23 @@ const AgentDetail = () => {
           )}
         </div>
 
+        {/* AVAILABLE ACTIONS */}
         <div className="agent-card">
           <h2>Available Actions</h2>
 
           <ul className="agent-list">
             {allActions
-              .filter((a) => !agentData.actions.some((x) => x.id === a.id))
+              .filter(
+                (a) => !agentData.actions.some((x) => x.id === a.id)
+              )
               .map((action) => (
                 <li key={action.id}>
                   {action.name}
                   <button
                     className="primary-btn"
-                    onClick={() => assignAction(id, action.id).then(loadData)}
+                    onClick={() =>
+                      assignAction(id, action.id).then(loadData)
+                    }
                   >
                     Assign
                   </button>
@@ -138,6 +171,7 @@ const AgentDetail = () => {
               ))}
           </ul>
         </div>
+
       </div>
     </div>
   );
