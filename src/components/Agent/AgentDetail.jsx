@@ -12,6 +12,7 @@ import {
 import "../Dashboard/Dashboard.css";
 
 
+
 const AgentDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
