@@ -6,7 +6,7 @@ import {
   assignAction,
   removeAction,
   getActions,
-  deleteAgent
+  deleteAgent,
 } from "../../services/agentService";
 
 const AgentDetail = () => {
@@ -42,15 +42,23 @@ const AgentDetail = () => {
     setEditMode(false);
     loadData();
   };
-
   const handleDelete = async () => {
     try {
       await deleteAgent(id);
-      navigate("/dashboard");
+      navigate("/"); // ← THIS
     } catch (err) {
       console.error(err);
     }
   };
+
+  // const handleDelete = async () => {
+  //   try {
+  //     await deleteAgent(id);
+  //     navigate("/dashboard");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   if (!agentData) {
     return (
@@ -65,7 +73,6 @@ const AgentDetail = () => {
   return (
     <div className="dashboard-page">
       <div className="dashboard-container">
-
         {/* AGENT HEADER */}
         <div className="agent-card">
           {editMode ? (
@@ -97,10 +104,7 @@ const AgentDetail = () => {
                   Edit
                 </button>
 
-                <button
-                  className="delete-btn"
-                  onClick={handleDelete}
-                >
+                <button className="delete-btn" onClick={handleDelete}>
                   Delete
                 </button>
               </div>
@@ -135,9 +139,7 @@ const AgentDetail = () => {
                   {action.name}
                   <button
                     className="delete-btn"
-                    onClick={() =>
-                      removeAction(id, action.id).then(loadData)
-                    }
+                    onClick={() => removeAction(id, action.id).then(loadData)}
                   >
                     Remove
                   </button>
@@ -153,17 +155,13 @@ const AgentDetail = () => {
 
           <ul className="agent-list">
             {allActions
-              .filter(
-                (a) => !agentData.actions.some((x) => x.id === a.id)
-              )
+              .filter((a) => !agentData.actions.some((x) => x.id === a.id))
               .map((action) => (
                 <li key={action.id}>
                   {action.name}
                   <button
                     className="primary-btn"
-                    onClick={() =>
-                      assignAction(id, action.id).then(loadData)
-                    }
+                    onClick={() => assignAction(id, action.id).then(loadData)}
                   >
                     Assign
                   </button>
@@ -171,7 +169,6 @@ const AgentDetail = () => {
               ))}
           </ul>
         </div>
-
       </div>
     </div>
   );
