@@ -2,56 +2,75 @@ const CustomerStories = () => {
   return (
     <main className="marketing-page">
       <section className="marketing-hero">
-        <h1>Use Case Scenarios</h1>
+        <h1>Customer Stories & Use Cases</h1>
         <p>
-          Suzana demonstrates how permission modeling and impact analysis
-          can help teams understand authority before execution.
+          Organizations use Suzana to understand agent authority before deployment.
+          Instead of discovering risk in production, they model it at design time.
         </p>
       </section>
 
       <section className="story-card">
-        <h2>Academic AI Research Project</h2>
+        <h2>Why Customers Use Suzana</h2>
         <p>
-          A university research team needed to simulate how AI agents
-          could interact with predefined system actions.
-        </p>
-        <p>
-          Using Suzana, they created agents, assigned actions,
-          and observed how impact levels changed automatically
-          as permissions were added or removed.
-        </p>
-      </section>
-
-      <section className="story-card">
-        <h2>Internal Security Training Demo</h2>
-        <p>
-          A security training group used Suzana to explain
-          least-privilege principles and many-to-many relationships
-          between agents and actions.
-        </p>
-        <p>
-          The automatic impact summary helped visualize how
-          combining low-impact permissions can still increase
-          overall authority exposure.
-        </p>
-      </section>
-
-      <section className="story-card">
-        <h2>Prototype Access Control System</h2>
-        <p>
-          A development team explored how to structure
-          authentication, authorization, and permission management
-          in a full-stack application.
-        </p>
-        <p>
-          Suzana provided a working example of:
+          Teams adopt Suzana when building AI agents, automation systems,
+          or internal tools that perform sensitive actions.
         </p>
         <ul>
-          <li>JWT-based authentication</li>
-          <li>Owner-only resource modification</li>
-          <li>Action assignment through a permissions table</li>
-          <li>Automatic impact aggregation</li>
+          <li>To enforce least privilege from the start</li>
+          <li>To prevent confused deputy scenarios</li>
+          <li>To visualize cumulative authority exposure</li>
+          <li>To justify access decisions during security reviews</li>
+          <li>To simulate “what if” permission combinations safely</li>
         </ul>
+      </section>
+
+      <section className="story-card">
+        <h2>What Actions Teams Assign — and Why</h2>
+        <p>
+          Each action represents a discrete authority capability.
+          Teams assign only what an agent strictly needs.
+        </p>
+        <ul>
+          <li>Read Data — for analytics or reporting agents</li>
+          <li>Modify Records — for workflow automation</li>
+          <li>Deploy Model — for ML pipeline execution</li>
+          <li>Delete Files — for lifecycle management</li>
+          <li>Call External API — for third-party integrations</li>
+        </ul>
+        <p>
+          By assigning only required actions, teams maintain strict
+          control over operational scope and reduce blast radius.
+        </p>
+      </section>
+
+      <section className="story-card">
+        <h2>How Risk Is Calculated</h2>
+        <p>
+          Every action has an impact level. Each level has a fixed weight.
+        </p>
+
+        <ul>
+          <li>Low → 1 point</li>
+          <li>Medium → 3 points</li>
+          <li>High → 6 points</li>
+          <li>Irreversible → 10 points</li>
+        </ul>
+
+        <p>
+          The Risk Score is calculated by multiplying the number of actions
+          in each category by its weight and adding them together.
+        </p>
+
+        <p>
+          Example:  
+          2 Low (2 × 1 = 2) + 1 High (1 × 6 = 6)  
+          Final Risk Score = 8
+        </p>
+
+        <p>
+          As more high-impact or irreversible permissions are assigned,
+          total authority exposure increases proportionally.
+        </p>
       </section>
     </main>
   );
