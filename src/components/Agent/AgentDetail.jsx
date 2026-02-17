@@ -10,6 +10,7 @@ import {
 } from "../../services/agentService";
 
 import "../Dashboard/Dashboard.css";
+import "./AgentDetail.css";
 
 
 
