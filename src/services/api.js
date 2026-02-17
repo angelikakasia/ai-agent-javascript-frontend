@@ -7,15 +7,22 @@ export const apiRequest = async (endpoint, method = "GET", body = null) => {
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: token ? `Bearer ${token}` : ""
+      Authorization: token ? `Bearer ${token}` : "",
     },
-    body: body ? JSON.stringify(body) : null
+    body: body ? JSON.stringify(body) : null,
   });
 
-  const data = await res.json();
+  let data;
+
+  try {
+    data = await res.json();
+  } catch {
+    const text = await res.text();
+    throw new Error(text || "Server returned non-JSON response");
+  }
 
   if (!res.ok) {
-    throw new Error(data.err || "Request failed");
+    throw new Error(data?.error || "Request failed");
   }
 
   return data;
