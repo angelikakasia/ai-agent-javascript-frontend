@@ -50,7 +50,7 @@ const AgentDetail = () => {
   const handleDelete = async () => {
     try {
       await deleteAgent(id);
-      navigate("/"); // ← THIS
+      navigate("/"); 
     } catch (err) {
       console.error(err);
     }
