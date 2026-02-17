@@ -50,6 +50,8 @@ const AgentDetail = () => {
       </div>
     );
   }
+  console.log("All actions:", allActions);
+  console.log("Assigned actions:", agentData.actions);
 
   return (
     <div className="dashboard-page">
@@ -90,7 +92,7 @@ const AgentDetail = () => {
             <li>High: {agentData.impact_summary.high}</li>
             <li>Irreversible: {agentData.impact_summary.irreversible}</li>
           </ul>
-          
+
           <h3>Risk Score</h3>
           <p className="risk-score">{agentData.risk_score}</p>
         </div>
