@@ -9,6 +9,9 @@ import {
   deleteAgent,
 } from "../../services/agentService";
 
+import "../Dashboard/Dashboard.css";
+
+
 const AgentDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
